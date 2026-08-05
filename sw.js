@@ -1,4 +1,4 @@
-const CACHE_NAME = 'absensi-pwa-v2';
+const CACHE_NAME = 'absensi-pwa-v3';
 const ASSETS_TO_CACHE = [
   './',
   './Index.html',
@@ -7,8 +7,7 @@ const ASSETS_TO_CACHE = [
   './image/icon-192.png',
   './image/icon-512.png',
   './image/icon-maskable-512.png',
-  './image/apple-touch-icon.png',
-  './image/icons8-fingerprint-50.png'
+  './image/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -16,7 +15,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
-        console.warn('[SW] Caching asset warning:', err);
+        console.warn('[SW] Cache warning:', err);
       });
     })
   );
@@ -24,12 +23,11 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
+    caches.keys().then((keys) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('[SW] Clearing old cache:', cacheName);
-            return caches.delete(cacheName);
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
           }
         })
       );
