@@ -2,7 +2,9 @@
   "name": "Aplikasi Absensi Karyawan Fingerprint",
   "short_name": "Absensi",
   "description": "Aplikasi Manajemen Absensi Karyawan Fingerprint PWA Standalone",
-  "start_url": "./Index.html",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "display_override": [
     "standalone",

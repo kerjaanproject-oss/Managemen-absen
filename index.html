@@ -5631,58 +5631,48 @@
 
     })();
   </script>
-  <!-- PWA Service Worker Registration & Install Helper -->
+  <!-- PWA Service Worker Registration & Native Install Helper -->
   <script>
+    window.deferredPrompt = null;
+    let autoPromptOnReady = false;
+
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
         navigator.serviceWorker.register('./sw.js')
           .then(function (reg) {
-            console.log('[PWA] Service Worker registered successfully:', reg.scope);
+            console.log('[PWA] Service Worker registered:', reg.scope);
           })
           .catch(function (err) {
-            console.error('[PWA] Service Worker registration failed:', err);
+            console.error('[PWA] Service Worker reg failed:', err);
           });
       });
     }
 
-    let deferredPrompt = null;
     window.addEventListener('beforeinstallprompt', function (e) {
       e.preventDefault();
-      deferredPrompt = e;
-      var installBtn = document.getElementById('pwaInstallBtn');
-      if (installBtn) {
-        installBtn.style.display = 'inline-flex';
+      window.deferredPrompt = e;
+      console.log('[PWA] Native beforeinstallprompt captured!');
+      if (autoPromptOnReady) {
+        triggerNativePrompt();
       }
     });
 
-    window.promptPwaInstall = function () {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(function (choiceResult) {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('[PWA] User accepted install prompt');
-          }
-          deferredPrompt = null;
-          var installBtn = document.getElementById('pwaInstallBtn');
-          if (installBtn) installBtn.style.display = 'none';
+    function triggerNativePrompt() {
+      if (window.deferredPrompt) {
+        window.deferredPrompt.prompt();
+        window.deferredPrompt.userChoice.then(function (choiceResult) {
+          console.log('[PWA] Native Install choice:', choiceResult.outcome);
+          window.deferredPrompt = null;
         });
+      }
+    }
+
+    window.promptPwaInstall = function () {
+      if (window.deferredPrompt) {
+        triggerNativePrompt();
       } else {
-        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        if (isIOS) {
-          Swal.fire({
-            title: 'Instal di iPhone / iPad',
-            html: 'Untuk memasang aplikasi ini di layar utama iOS:<br><br><b>1. Tekan tombol Share (Bagikan) <i class="bi bi-share"></i> di bagian bawah Safari.<br>2. Gulir dan pilih "Tambah ke Layar Utama" / "Add to Home Screen" <i class="bi bi-plus-square"></i>.</b>',
-            icon: 'info',
-            confirmButtonText: 'Mengerti'
-          });
-        } else {
-          Swal.fire({
-            title: 'Instal Aplikasi PWA',
-            html: 'Aplikasi dapat diinstal langsung via browser:<br><br><b>1. Buka menu titik tiga <i class="bi bi-three-dots-vertical"></i> di pojok kanan atas browser.<br>2. Pilih "Instal aplikasi" / "Tambahkan ke Layar Utama".</b>',
-            icon: 'info',
-            confirmButtonText: 'Mengerti'
-          });
-        }
+        autoPromptOnReady = true;
+        console.log('[PWA] Waiting for native install prompt event...');
       }
     };
   </script>
