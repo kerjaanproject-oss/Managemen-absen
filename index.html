@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://fonts.googleapis.com https://ssl.google-analytics.com https://www.gstatic.com; style-src 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://cdn.jsdelivr.net https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://*.firebasestorage.app https://identitytoolkit.googleapis.com https://firestore.googleapis.com; img-src 'self' data: https: blob: https://drive.google.com https://*.googleusercontent.com https://*.google.com https://img.icons8.com; manifest-src 'self' data:; worker-src 'self' blob:; frame-ancestors 'self';">
+    content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://fonts.googleapis.com https://ssl.google-analytics.com https://www.gstatic.com; style-src 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://cdn.jsdelivr.net https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://*.firebasestorage.app https://identitytoolkit.googleapis.com https://firestore.googleapis.com; img-src 'self' data: https: blob: https://drive.google.com https://*.googleusercontent.com https://*.google.com https://img.icons8.com; manifest-src 'self' data: blob:; worker-src 'self' blob:; frame-ancestors 'self';">
   <title>Aplikasi Absensi Karyawan Fingerprint</title>
   <!-- PWA Meta Tags & Static Web App Manifest -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -5705,6 +5705,46 @@
 
       function initPWA() {
         try {
+          var manifestObj = {
+            name: "Aplikasi Absensi Karyawan",
+            short_name: "Absensi HP",
+            description: "Aplikasi Absensi & Rekap Data Karyawan Fingerprint",
+            start_url: window.location.href,
+            display: "standalone",
+            orientation: "portrait",
+            background_color: "#f4f6f9",
+            theme_color: "#2563eb",
+            icons: [
+              {
+                src: "https://img.icons8.com/nolan/96/fingerprint.png",
+                sizes: "96x96",
+                type: "image/png",
+                purpose: "any maskable"
+              },
+              {
+                src: "https://img.icons8.com/nolan/192/fingerprint.png",
+                sizes: "192x192",
+                type: "image/png",
+                purpose: "any maskable"
+              },
+              {
+                src: "https://img.icons8.com/nolan/512/fingerprint.png",
+                sizes: "512x512",
+                type: "image/png",
+                purpose: "any maskable"
+              }
+            ]
+          };
+
+          var manifestStr = JSON.stringify(manifestObj);
+          var manifestBlob = new Blob([manifestStr], { type: 'application/json' });
+          var manifestURL = URL.createObjectURL(manifestBlob);
+
+          var manifestLink = document.createElement('link');
+          manifestLink.rel = 'manifest';
+          manifestLink.href = manifestURL;
+          document.head.appendChild(manifestLink);
+
           if ('serviceWorker' in navigator) {
             var swCode = `
               self.addEventListener('install', (e) => { self.skipWaiting(); });
