@@ -5631,11 +5631,11 @@
 
     })();
   </script>
-  <!-- PWA Service Worker Inline Registration & Install Handler (Formula e-Slip Gaji) -->
+  <!-- PWA Service Worker Inline Registration & Direct Native Install -->
   <script>
-    (function () {
-      var deferredPwaPrompt = null;
+    window.deferredPwaPrompt = null;
 
+    (function () {
       function initPWA() {
         try {
           if ('serviceWorker' in navigator) {
@@ -5659,7 +5659,7 @@
 
       window.addEventListener('beforeinstallprompt', function (e) {
         e.preventDefault();
-        deferredPwaPrompt = e;
+        window.deferredPwaPrompt = e;
         var pwaBtn = document.getElementById('pwaInstallBtn');
         if (pwaBtn) pwaBtn.style.display = 'inline-flex';
         var pwaMenu = document.getElementById('menuPwaInstall');
@@ -5667,25 +5667,11 @@
       });
 
       window.promptPwaInstall = function () {
-        if (deferredPwaPrompt) {
-          deferredPwaPrompt.prompt();
-          deferredPwaPrompt.userChoice.then(function (choiceResult) {
-            if (choiceResult.outcome === 'accepted') {
-              Swal.fire('Terpasang!', 'Aplikasi Absensi Karyawan telah terinstall di HP Anda.', 'success');
-            }
-            deferredPwaPrompt = null;
-          });
-        } else {
-          Swal.fire({
-            title: '📱 Cara Install Aplikasi di HP',
-            html: '<div class="text-start small p-2">' +
-              '<p class="mb-2"><b>Di HP Android (Chrome/Edge):</b><br>1. Tekan tombol menu titik tiga (⋮) di pojok kanan atas browser.<br>2. Pilih <b>"Tambahkan ke Layar Utama"</b> atau <b>"Install Aplikasi"</b>.</p>' +
-              '<hr class="my-2">' +
-              '<p class="mb-0"><b>Di iPhone / iPad (Safari):</b><br>1. Tekan tombol <b>Share</b> (kotak dengan panah ke atas di bagian bawah Safari).<br>2. Geser ke bawah dan pilih <b>"Add to Home Screen"</b> (*Tambahkan ke Layar Utama*).</p>' +
-              '</div>',
-            icon: 'info',
-            confirmButtonText: 'Saya Mengerti',
-            confirmButtonColor: '#0d6efd'
+        if (window.deferredPwaPrompt) {
+          window.deferredPwaPrompt.prompt();
+          window.deferredPwaPrompt.userChoice.then(function (choiceResult) {
+            console.log('[PWA] Install choice outcome:', choiceResult.outcome);
+            window.deferredPwaPrompt = null;
           });
         }
       };
