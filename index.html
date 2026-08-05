@@ -5634,45 +5634,36 @@
   <!-- PWA Service Worker Registration & Native Install Helper -->
   <script>
     window.deferredPrompt = null;
-    let autoPromptOnReady = false;
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
         navigator.serviceWorker.register('./sw.js')
           .then(function (reg) {
-            console.log('[PWA] Service Worker registered:', reg.scope);
+            console.log('[PWA] Service Worker active:', reg.scope);
           })
           .catch(function (err) {
-            console.error('[PWA] Service Worker reg failed:', err);
+            console.error('[PWA] Service Worker reg error:', err);
           });
       });
     }
 
     window.addEventListener('beforeinstallprompt', function (e) {
-      e.preventDefault();
+      // Simpan event instalasi native agar bisa dipanggil saat tombol diklik
       window.deferredPrompt = e;
-      console.log('[PWA] Native beforeinstallprompt captured!');
-      if (autoPromptOnReady) {
-        triggerNativePrompt();
-      }
+      console.log('[PWA] Native install prompt ready!');
     });
-
-    function triggerNativePrompt() {
-      if (window.deferredPrompt) {
-        window.deferredPrompt.prompt();
-        window.deferredPrompt.userChoice.then(function (choiceResult) {
-          console.log('[PWA] Native Install choice:', choiceResult.outcome);
-          window.deferredPrompt = null;
-        });
-      }
-    }
 
     window.promptPwaInstall = function () {
       if (window.deferredPrompt) {
-        triggerNativePrompt();
+        window.deferredPrompt.prompt();
+        window.deferredPrompt.userChoice.then(function (choiceResult) {
+          console.log('[PWA] User choice:', choiceResult.outcome);
+          if (choiceResult.outcome === 'accepted') {
+            window.deferredPrompt = null;
+          }
+        });
       } else {
-        autoPromptOnReady = true;
-        console.log('[PWA] Waiting for native install prompt event...');
+        alert('Browser sedang menyiapkan instalasi PWA... Silakan tunggu 3 detik lalu klik tombol lagi, atau pilih "Instal aplikasi" di menu titik tiga (⋮) Chrome.');
       }
     };
   </script>
