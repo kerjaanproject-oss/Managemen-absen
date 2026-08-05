@@ -7,14 +7,14 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://fonts.googleapis.com https://ssl.google-analytics.com https://www.gstatic.com; style-src 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://cdn.jsdelivr.net https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://*.firebasestorage.app https://identitytoolkit.googleapis.com https://firestore.googleapis.com; img-src 'self' data: https://drive.google.com https://*.googleusercontent.com https://*.google.com https://*.ftcdn.net https://t3.ftcdn.net https://*.wallpaperflare.com https://c4.wallpaperflare.com; worker-src 'self'; manifest-src 'self'; frame-ancestors 'self';">
   <title>Aplikasi Absensi Karyawan Fingerprint</title>
 
-  <!-- PWA Meta Tags & Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
+  <!-- PWA Meta Tags & Inline Data URI Manifest -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Absensi">
-  <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="apple-touch-icon" href="https://img.icons8.com/nolan/96/fingerprint.png">
+  <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Aplikasi%20Absensi%20Karyawan%20Fingerprint%22%2C%22short_name%22%3A%22Absensi%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%230f172a%22%2C%22theme_color%22%3A%22%230f172a%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Fnolan%2F192%2Ffingerprint.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Fnolan%2F512%2Ffingerprint.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
 
   <!-- Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -5631,41 +5631,67 @@
 
     })();
   </script>
-  <!-- PWA Service Worker Registration & Native Install Helper -->
+  <!-- PWA Service Worker Inline Registration & Install Handler (Formula e-Slip Gaji) -->
   <script>
-    window.deferredPrompt = null;
+    (function () {
+      var deferredPwaPrompt = null;
 
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('./sw.js')
-          .then(function (reg) {
-            console.log('[PWA] Service Worker active:', reg.scope);
-          })
-          .catch(function (err) {
-            console.error('[PWA] Service Worker reg error:', err);
-          });
-      });
-    }
-
-    window.addEventListener('beforeinstallprompt', function (e) {
-      // Simpan event instalasi native agar bisa dipanggil saat tombol diklik
-      window.deferredPrompt = e;
-      console.log('[PWA] Native install prompt ready!');
-    });
-
-    window.promptPwaInstall = function () {
-      if (window.deferredPrompt) {
-        window.deferredPrompt.prompt();
-        window.deferredPrompt.userChoice.then(function (choiceResult) {
-          console.log('[PWA] User choice:', choiceResult.outcome);
-          if (choiceResult.outcome === 'accepted') {
-            window.deferredPrompt = null;
+      function initPWA() {
+        try {
+          if ('serviceWorker' in navigator) {
+            var swCode = `
+              self.addEventListener('install', (e) => self.skipWaiting());
+              self.addEventListener('activate', (e) => self.clients.claim());
+              self.addEventListener('fetch', (e) => {
+                if (e.request.method === 'GET' && !e.request.url.includes('firebase')) {
+                  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+                }
+              });
+            `;
+            var swBlob = new Blob([swCode], { type: 'text/javascript' });
+            var swURL = URL.createObjectURL(swBlob);
+            navigator.serviceWorker.register(swURL).catch(function () {});
           }
-        });
-      } else {
-        alert('Browser sedang menyiapkan instalasi PWA... Silakan tunggu 3 detik lalu klik tombol lagi, atau pilih "Instal aplikasi" di menu titik tiga (⋮) Chrome.');
+        } catch (err) {
+          console.log('PWA init note:', err);
+        }
       }
-    };
+
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        deferredPwaPrompt = e;
+        var pwaBtn = document.getElementById('pwaInstallBtn');
+        if (pwaBtn) pwaBtn.style.display = 'inline-flex';
+      });
+
+      window.promptPwaInstall = function () {
+        if (deferredPwaPrompt) {
+          deferredPwaPrompt.prompt();
+          deferredPwaPrompt.userChoice.then(function (choiceResult) {
+            if (choiceResult.outcome === 'accepted') {
+              Swal.fire('Terpasang!', 'Aplikasi Absensi Karyawan telah terinstall di HP Anda.', 'success');
+            }
+            deferredPwaPrompt = null;
+          });
+        } else {
+          Swal.fire({
+            title: '📱 Cara Install Aplikasi di HP',
+            html: '<div class="text-start small p-2">' +
+              '<p class="mb-2"><b>Di HP Android (Chrome/Edge):</b><br>1. Tekan tombol menu titik tiga (⋮) di pojok kanan atas browser.<br>2. Pilih <b>"Tambahkan ke Layar Utama"</b> atau <b>"Install Aplikasi"</b>.</p>' +
+              '<hr class="my-2">' +
+              '<p class="mb-0"><b>Di iPhone / iPad (Safari):</b><br>1. Tekan tombol <b>Share</b> (kotak dengan panah ke atas di bagian bawah Safari).<br>2. Geser ke bawah dan pilih <b>"Add to Home Screen"</b> (*Tambahkan ke Layar Utama*).</p>' +
+              '</div>',
+            icon: 'info',
+            confirmButtonText: 'Saya Mengerti',
+            confirmButtonColor: '#0d6efd'
+          });
+        }
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        initPWA();
+      });
+    })();
   </script>
 </body>
 
