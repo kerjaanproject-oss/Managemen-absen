@@ -784,7 +784,7 @@
               <div class="card border-0 shadow-sm rounded-3 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
                   <h6 class="fw-bold mb-0"><i class="bi bi-bar-chart-fill me-2 text-primary"></i>Grafik Rekapitulasi
-                    Presensi</h6>
+                    Absensi</h6>
                   <span class="badge bg-light text-dark border" id="dashChartBadge">Semua Data</span>
                 </div>
                 <div class="card-body p-3 d-flex align-items-center justify-content-center" style="min-height: 320px;">
@@ -796,7 +796,7 @@
             <div class="col-12 col-lg-5">
               <div class="card border-0 shadow-sm rounded-3 h-100">
                 <div class="card-header bg-white py-3 border-bottom">
-                  <h6 class="fw-bold mb-0"><i class="bi bi-pie-chart-fill me-2 text-info"></i>Persentase Status Presensi
+                  <h6 class="fw-bold mb-0"><i class="bi bi-pie-chart-fill me-2 text-info"></i>Persentase Status Absensi
                   </h6>
                 </div>
                 <div class="card-body p-3 d-flex align-items-center justify-content-center" style="min-height: 320px;">
@@ -813,7 +813,7 @@
               <div class="card border-0 shadow-sm rounded-3 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
                   <h6 class="fw-bold mb-0"><i class="bi bi-diagram-3-fill me-2 text-primary"></i>Grafik Komparasi
-                    Presensi Per Departemen</h6>
+                    Absensi Per Departemen</h6>
                   <small class="text-muted fw-semibold">Visualisasi Perbandingan</small>
                 </div>
                 <div class="card-body p-3 d-flex align-items-center justify-content-center" style="min-height: 320px;">
@@ -1139,7 +1139,7 @@
               <h4 class="fw-bold mb-1"><button class="btn btn-sm btn-light border shadow-sm me-2"
                   onclick="window.toggleSidebar()" title="Sembunyikan / Tampilkan Sidebar"><i
                     class="bi bi-list fs-5"></i></button>Laporan Rekapitulasi Absensi Karyawan</h4>
-              <p class="text-muted mb-0 small">Rekapitulasi total presensi masuk, pulang, terlambat, dan cepat pulang
+              <p class="text-muted mb-0 small">Rekapitulasi total absensi masuk, pulang, terlambat, dan cepat pulang
                 seluruh karyawan</p>
             </div>
             <div class="d-flex gap-2">
@@ -1159,7 +1159,7 @@
           <div class="card border-0 shadow-sm rounded-3">
             <div class="card-header bg-white py-3 border-bottom-0">
               <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6 class="fw-bold mb-0"><i class="bi bi-file-earmark-text me-2 text-primary"></i>Rekapitulasi Presensi
+                <h6 class="fw-bold mb-0"><i class="bi bi-file-earmark-text me-2 text-primary"></i>Rekapitulasi Absensi
                   Karyawan</h6>
                 <span class="badge bg-light text-dark border" id="totalLaporanKaryawanBadge">0 Karyawan</span>
               </div>
@@ -1559,13 +1559,13 @@
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header bg-info text-white">
-          <h5 class="modal-title fw-bold"><i class="bi bi-eye me-2"></i>Detail Presensi Karyawan</h5>
+          <h5 class="modal-title fw-bold"><i class="bi bi-eye me-2"></i>Detail Absensi Karyawan</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body p-4">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
-              <small class="text-muted d-block">ID Presensi Record</small>
+              <small class="text-muted d-block">ID Absensi Record</small>
               <span class="badge bg-secondary font-monospace" id="detailAbsenId">-</span>
             </div>
             <div class="text-end">
@@ -1576,7 +1576,7 @@
 
           <div class="row g-3">
             <div class="col-6">
-              <label class="form-label small text-muted mb-0">Tanggal Presensi</label>
+              <label class="form-label small text-muted mb-0">Tanggal Absensi</label>
               <div class="fw-semibold text-dark" id="detailAbsenTanggal">-</div>
             </div>
             <div class="col-6">
@@ -1689,7 +1689,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-person me-2"></i>Rincian Presensi &amp;
+          <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-person me-2"></i>Rincian Absensi &amp;
             Keterlambatan Karyawan</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -1734,7 +1734,7 @@
           </div>
 
           <!-- Attendance Records Table -->
-          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-calendar3 me-1 text-primary"></i>Riwayat Presensi &amp;
+          <h6 class="fw-bold text-dark mb-2"><i class="bi bi-calendar3 me-1 text-primary"></i>Riwayat Absensi &amp;
             Rincian Waktu Harian</h6>
           <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
             <table class="table table-sm table-hover align-middle mb-0">
@@ -2209,7 +2209,7 @@
 
         batchImportAbsen: async function (token, records) {
           if (!Array.isArray(records) || records.length === 0) {
-            return { success: false, message: 'Tidak ada data presensi untuk diimport.' };
+            return { success: false, message: 'Tidak ada data absensi untuk diimport.' };
           }
           if (!isFirebaseReady || !db) throw new Error("Firebase belum siap.");
 
@@ -2402,7 +2402,7 @@
           }
 
           await batch.commit();
-          return { success: true, message: 'Import data mesin ke Firebase selesai! ' + importedCount + ' data presensi berhasil diproses dan dicocokkan dengan Master Shift.' };
+          return { success: true, message: 'Import data mesin ke Firebase selesai! ' + importedCount + ' data absensi berhasil diproses dan dicocokkan dengan Master Shift.' };
         },
 
         destroySession: async function (token) {
@@ -3046,7 +3046,7 @@
           data: {
             labels: ['Absen Masuk', 'Absen Pulang', 'Tanpa Scan Masuk', 'Tanpa Scan Pulang', 'Terlambat', 'Cepat Pulang'],
             datasets: [{
-              label: 'Jumlah Presensi',
+              label: 'Jumlah Absensi',
               data: [absenMasuk, absenPulang, tanpaMasuk, tanpaPulang, terlambat, cepatPulang],
               backgroundColor: [
                 'rgba(59, 130, 246, 0.85)',
@@ -4134,7 +4134,7 @@
             '<td class="text-center fw-bold text-dark">' + lateText + '</td>' +
             '<td class="text-center fw-bold text-dark">' + earlyText + '</td>' +
             '<td class="text-end pe-3 text-nowrap">' +
-            '<button class="btn btn-sm btn-primary text-white fw-bold shadow-xs px-2.5" title="Lihat Detail Rincian Presensi" onclick="window.viewLaporanDetail(\'' + escapeHTML(kar.id) + '\')"><i class="bi bi-eye-fill me-1"></i>Detail</button>' +
+            '<button class="btn btn-sm btn-primary text-white fw-bold shadow-xs px-2.5" title="Lihat Detail Rincian Absensi" onclick="window.viewLaporanDetail(\'' + escapeHTML(kar.id) + '\')"><i class="bi bi-eye-fill me-1"></i>Detail</button>' +
             '</td>' +
             '</tr>';
         });
@@ -4185,7 +4185,7 @@
 
         var html = '';
         if (karAbsen.length === 0) {
-          html = '<tr><td colspan="7" class="text-center text-muted py-3">Tidak ada catatan presensi pada rentang tanggal ini.</td></tr>';
+          html = '<tr><td colspan="7" class="text-center text-muted py-3">Tidak ada catatan absensi pada rentang tanggal ini.</td></tr>';
         } else {
           karAbsen.forEach(function (item) {
             var diff = calcRecordLateEarlyDiff(item, settingToleransiVal);
@@ -4280,7 +4280,7 @@
           return;
         }
 
-        var html = '<!DOCTYPE html><html><head><title>Detail Presensi - ' + escapeHTML(kar.nama) + '</title>' +
+        var html = '<!DOCTYPE html><html><head><title>Detail Absensi - ' + escapeHTML(kar.nama) + '</title>' +
           '<style>' +
           '@page { size: portrait; margin: 12mm; }' +
           'body { font-family: Arial, sans-serif; font-size: 11px; color: #1e293b; margin: 0; padding: 15px; }' +
@@ -4293,7 +4293,7 @@
           '.text-center { text-align: center; }' +
           '.text-bold { font-weight: bold; }' +
           '</style></head><body>' +
-          '<div class="header-title">Rincian Presensi &amp; Keterlambatan Karyawan</div>' +
+          '<div class="header-title">Rincian Absensi &amp; Keterlambatan Karyawan</div>' +
           '<div class="sub-header"><b>Karyawan:</b> ' + escapeHTML(kar.nama) + ' (' + escapeHTML(kar.id) + ') &nbsp;|&nbsp; <b>Departemen:</b> ' + escapeHTML(kar.dept || '-') + ' &nbsp;|&nbsp; <b>Periode:</b> ' + periText + '</div>' +
           '<div class="info-grid">' +
           '<div><b>Total Record:</b> ' + karAbsen.length + ' Hari</div>' +
@@ -4363,7 +4363,7 @@
         });
 
         if (karAbsen.length === 0) {
-          Swal.fire('Peringatan', 'Tidak ada data presensi karyawan ini pada rentang tanggal terpilih untuk di-export!', 'warning');
+          Swal.fire('Peringatan', 'Tidak ada data absensi karyawan ini pada rentang tanggal terpilih untuk di-export!', 'warning');
           return;
         }
 
@@ -4384,7 +4384,7 @@
         var html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
           '<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Rincian Absensi</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>' +
           '<body style="font-family:Arial, sans-serif;">' +
-          '<h3 style="color:#0f172a; margin-bottom:4px;">RINCIAN PRESENSI &amp; KETERLAMBATAN KARYAWAN</h3>' +
+          '<h3 style="color:#0f172a; margin-bottom:4px;">RINCIAN ABSENSI &amp; KETERLAMBATAN KARYAWAN</h3>' +
           '<p style="color:#475569; font-size:12px; margin-top:0;">' +
           '<b>Karyawan:</b> ' + escapeHTML(kar.nama) + ' (' + escapeHTML(kar.id) + ') &nbsp;|&nbsp; ' +
           '<b>Departemen:</b> ' + escapeHTML(kar.dept || '-') + ' &nbsp;|&nbsp; ' +
@@ -4493,9 +4493,9 @@
         var deptText = filterDept ? filterDept : 'Semua Departemen';
 
         var html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
-          '<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Laporan Presensi</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>' +
+          '<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Laporan Absensi</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>' +
           '<body style="font-family:Arial, sans-serif;">' +
-          '<h3 style="color:#0f172a; margin-bottom:4px;">LAPORAN REKAPITULASI PRESENSI KARYAWAN</h3>' +
+          '<h3 style="color:#0f172a; margin-bottom:4px;">LAPORAN REKAPITULASI ABSENSI KARYAWAN</h3>' +
           '<p style="color:#475569; font-size:12px; margin-top:0;"><b>Periode Tanggal:</b> ' + periText + ' &nbsp;|&nbsp; <b>Departemen:</b> ' + deptText + '</p>' +
           '<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse; border:1px solid #cbd5e1; text-align:left; font-size:13px;">' +
           '<thead>' +
@@ -4617,7 +4617,7 @@
           return;
         }
 
-        var html = '<!DOCTYPE html><html><head><title>Cetak Laporan Rekapitulasi Presensi</title>' +
+        var html = '<!DOCTYPE html><html><head><title>Cetak Laporan Rekapitulasi Absensi</title>' +
           '<style>' +
           '@page { size: landscape; margin: 12mm; }' +
           'body { font-family: Arial, sans-serif; font-size: 12px; color: #1e293b; margin: 0; padding: 15px; }' +
@@ -4630,7 +4630,7 @@
           '.text-bold { font-weight: bold; }' +
           '.footer-info { margin-top: 20px; font-size: 10px; color: #64748b; display: flex; justify-content: space-between; }' +
           '</style></head><body>' +
-          '<div class="header-title">Laporan Rekapitulasi Presensi Karyawan</div>' +
+          '<div class="header-title">Laporan Rekapitulasi Absensi Karyawan</div>' +
           '<div class="sub-header"><b>Periode Tanggal:</b> ' + periText + ' &nbsp;|&nbsp; <b>Departemen:</b> ' + deptText + ' &nbsp;|&nbsp; <b>Total:</b> ' + filteredKar.length + ' Karyawan</div>' +
           '<table>' +
           '<thead><tr>' +
@@ -5491,7 +5491,7 @@
         btn.disabled = filtered.length === 0;
 
         if (filtered.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-3">Tidak ada data presensi pada rentang tanggal tersebut.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-3">Tidak ada data absensi pada rentang tanggal tersebut.</td></tr>';
           return;
         }
 
@@ -5528,13 +5528,13 @@
         });
 
         if (validRows.length === 0) {
-          Swal.fire('Peringatan', 'Tidak ada data presensi yang sesuai dengan filter tanggal.', 'warning');
+          Swal.fire('Peringatan', 'Tidak ada data absensi yang sesuai dengan filter tanggal.', 'warning');
           return;
         }
 
         Swal.fire({
           title: 'Konfirmasi Import Massal',
-          text: 'Impor ' + validRows.length + ' data presensi mesin ke database?',
+          text: 'Impor ' + validRows.length + ' data absensi mesin ke database?',
           icon: 'question',
           showCancelButton: true,
           confirmButtonColor: '#198754',
@@ -5662,7 +5662,7 @@
         checked.forEach(function (cb) { ids.push(cb.value); });
 
         Swal.fire({
-          title: 'Hapus ' + ids.length + ' Data Presensi?',
+          title: 'Hapus ' + ids.length + ' Data Absensi?',
           text: 'Data absensi terpilih akan dihapus permanen dari database.',
           icon: 'warning',
           showCancelButton: true,
