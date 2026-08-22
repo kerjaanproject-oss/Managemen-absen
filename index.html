@@ -175,6 +175,36 @@
       background: #f8fafc !important;
     }
 
+    .login-author-typing {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000 !important;
+      font-size: 0.74rem;
+      font-weight: 600;
+      min-height: 1.3em;
+      line-height: 1.2;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 0.9em;
+      background-color: #000000;
+      margin-left: 2px;
+      animation: blink-caret 0.75s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink-caret {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+    }
+
     .app-shell {
       min-height: 100vh;
       display: flex;
@@ -562,10 +592,46 @@
 
         <div class="text-center mt-3 pt-2 border-top">
           <div class="fw-bold text-dark" style="font-size: 0.78rem;">PT Berkah Batu Bara</div>
-          <div class="text-muted" style="font-size: 0.72rem;">Aplikasi Absensi &copy; 2026</div>
+          <div class="text-muted" style="font-size: 0.72rem;">&copy; 2026</div>
+          <div class="mt-1 d-flex justify-content-center">
+            <span class="login-author-typing"><span id="loginAuthorText"></span><span class="typing-cursor"></span></span>
+          </div>
         </div>
       </form>
     </div>
+    <script>
+      (function () {
+        var text = "Dibuat Oleh Sigit Aidil Adha";
+        var el = document.getElementById('loginAuthorText');
+        if (!el) return;
+        var idx = 0;
+        var isDeleting = false;
+
+        function runTypewriter() {
+          if (!el) return;
+          if (!isDeleting) {
+            idx++;
+            el.textContent = text.substring(0, idx);
+            if (idx >= text.length) {
+              isDeleting = true;
+              setTimeout(runTypewriter, 2200);
+              return;
+            }
+            setTimeout(runTypewriter, 85);
+          } else {
+            idx--;
+            el.textContent = text.substring(0, idx);
+            if (idx <= 0) {
+              isDeleting = false;
+              setTimeout(runTypewriter, 600);
+              return;
+            }
+            setTimeout(runTypewriter, 40);
+          }
+        }
+        setTimeout(runTypewriter, 300);
+      })();
+    </script>
   </section>
 
   <section id="mainApp" class="app-shell d-none">
