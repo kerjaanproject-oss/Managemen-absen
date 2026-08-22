@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://fonts.googleapis.com https://ssl.google-analytics.com https://www.gstatic.com; style-src 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://cdn.jsdelivr.net https://fonts.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com https://*.firebasestorage.app https://identitytoolkit.googleapis.com https://firestore.googleapis.com; img-src 'self' data: https: blob: https://drive.google.com https://*.googleusercontent.com https://*.google.com https://img.icons8.com; manifest-src 'self' data: blob:; worker-src 'self' blob:; frame-ancestors 'self';">
-  <title>Aplikasi Absensi Karyawan Fingerprint</title>
+  <title>Management absensi karyawan</title>
   <!-- PWA Meta Tags & Dynamic Blob Web Manifest -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -68,7 +68,7 @@
           `;
           var swBlob = new Blob([swCode], { type: 'text/javascript' });
           var swURL = URL.createObjectURL(swBlob);
-          navigator.serviceWorker.register(swURL).catch(function () {});
+          navigator.serviceWorker.register(swURL).catch(function () { });
         }
       } catch (err) {
         console.log('PWA init head note:', err);
@@ -605,9 +605,9 @@
         </a>
       </nav>
 
-      <div class="p-3 border-top border-secondary border-opacity-25 mt-auto sticky-bottom bg-slate-900 d-flex flex-column gap-2">
-        <button
-          id="pwaInstallBtn"
+      <div
+        class="p-3 border-top border-secondary border-opacity-25 mt-auto sticky-bottom bg-slate-900 d-flex flex-column gap-2">
+        <button id="pwaInstallBtn"
           class="btn btn-outline-info w-100 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm text-white border-info border-opacity-50"
           onclick="window.promptPwaInstall()">
           <i class="bi bi-download"></i> Install Aplikasi HP
@@ -5818,7 +5818,7 @@
             `;
             var swBlob = new Blob([swCode], { type: 'text/javascript' });
             var swURL = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swURL).catch(function () {});
+            navigator.serviceWorker.register(swURL).catch(function () { });
           }
         } catch (err) {
           console.log('PWA init note:', err);
